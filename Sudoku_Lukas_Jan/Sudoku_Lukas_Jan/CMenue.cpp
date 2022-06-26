@@ -105,9 +105,8 @@ void CMenue::schwierigkeitsAuswahl()
 		cout << "schwierigkeit leicht wurde gewählt" << endl;
 		this->anzahlMoeglicheFelher = 5;
 		cout << "Die Anzahl der Moeglichen Fehler beträgt: " << anzahlMoeglicheFelher << endl;
-		Spielfeld Joke;
-		CZelle feld[9][9];
-		Joke.ausgabeSpielfeld(feld);
+		//Sudoku.auslesen(schwierigkeit);
+		Sudoku.ausgabeSpielfeld();
 	}
 
 	if (schwierigkeit == 2)
@@ -115,7 +114,8 @@ void CMenue::schwierigkeitsAuswahl()
 		cout << "schwierigkeit mittel wurde gewählt" << endl;
 		this->anzahlMoeglicheFelher = 4;
 		cout << "Die Anzahl der Moeglichen Fehler beträgt: " << anzahlMoeglicheFelher << endl;
-
+		Sudoku.auslesen(schwierigkeit);
+		Sudoku.ausgabeSpielfeld();
 	}
 
 	if (schwierigkeit == 3)
@@ -123,6 +123,8 @@ void CMenue::schwierigkeitsAuswahl()
 		cout << "schwierigkeit schwer wurde gewählt" << endl;
 		this->anzahlMoeglicheFelher = 3;
 		cout << "Die Anzahl der Moeglichen Fehler beträgt: " << anzahlMoeglicheFelher << endl;
+		Sudoku.auslesen(schwierigkeit);
+		Sudoku.ausgabeSpielfeld();
 	}
 	system("PAUSE");
 }

@@ -5,18 +5,18 @@ using namespace std;
     
 Spielfeld::Spielfeld()
 {
-
+    for (int z = 0; z < 9; z++)
+    {
+        for (int s = 0; s < 9; s++)
+        {
+            feld[z][s] = new CZelle;
+        }
+    }
 }
 
 Spielfeld::~Spielfeld()
 {
 
-}
-
-Spielfeld::Spielfeld(int zeile, int spalte)
-{
-    this->zeile = zeile;
-    this->spalte = spalte;
 }
 
 void Spielfeld::setZeile()
@@ -29,14 +29,14 @@ void Spielfeld::setSpalte()
     this->spalte = spalte;
 }
 
-bool Spielfeld::checkWin(CZelle feld[9][9])
+bool Spielfeld::checkWin()
 {
     int summe = 0;
     for (int z = 0; z < 9; z++)
     {
         for (int s = 0; s < 9; s++)
         {
-            summe = summe + feld[z][s].getWertZelle();
+            summe = summe + feld[z][s]->getWertZelle();
         }
     }
 
@@ -48,38 +48,15 @@ bool Spielfeld::checkWin(CZelle feld[9][9])
     return false;
 }
 
-bool Spielfeld::checkZeile(CZelle feld[9][9], int zeile, int zahl)
-{
-    for (int i = 0; i < 9; i++)
-    {
-        if (zahl == feld[i][zeile].getWertZelle())
-        {
-            return false;
-        }
-    }
-    return true;
-}
 
-bool Spielfeld::checkSpalte(CZelle feld[9][9], int spalte, int zahl)
-{
-    for (int i = 0; i < 9; i++)
-    {
-        if (zahl == feld[spalte][i].getWertZelle())
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Spielfeld::checkNeunMal(CZelle feld[9][9], int zahl)
+bool Spielfeld::checkNeunMal(int zahl)
 {
     int summe = 0;
     for (int z = 0; z < 9; z++)
     {
         for (int s = 0; s < 9; s++)
         {
-            if (zahl == feld[z][s].getWertZelle())
+            if (zahl == feld[z][s]->getWertZelle())
             {
                 summe++;
             }
@@ -97,33 +74,23 @@ bool Spielfeld::checkNeunMal(CZelle feld[9][9], int zahl)
 
 }
 
-void Spielfeld::ausgabeSpielfeld(CZelle feld[9][9])
+void Spielfeld::ausgabeSpielfeld()
 {
     system("cls");
 
-    (feld[0][0]).setWertZelle(4);
-    (feld[0][1]).setWertZelle(4);
-    (feld[0][2]).setWertZelle(4);
-    (feld[0][3]).setWertZelle(4);
-    (feld[0][4]).setWertZelle(4);
-    (feld[0][5]).setWertZelle(4);
-    (feld[0][6]).setWertZelle(4);
-    (feld[0][7]).setWertZelle(4);
-    (feld[0][8]).setWertZelle(4);
 
     for (int z = 0; z < 9; z++)
     {
         for (int s = 0; s < 9; s++)
         {
-            cout << feld[z][s].getWertZelle();
+            cout << feld[z][s]->getWertZelle();
         }
         cout << endl;
     }
 
 
-    checkWin(feld);
-    CZelle Wert;
-    Wert.wertEinfuegen(feld);
+    checkWin();
+    eingabe();
 }
 
 void Spielfeld::neustarten()
@@ -134,24 +101,97 @@ void Spielfeld::neustarten()
 }
 
 void Spielfeld::auslesen(int auswahl)
-{
-    FILE* datei;
-    int z = 0, s = 0;
-    if ((fopen_s(&datei, "Null.csv", "r")) != NULL)
+{       
+    int z = 0, s = 0, tmp = 0;
+    if (auswahl == 1)
     {
-        fprintf_s(stderr, "Datei konnte nicht geoeffnet werden!\n");
-    }
+        FILE* datei;
 
-    while ((fscanf_s(datei, "%i\n", feld[z][s])) != EOF)
-    {
-        s++;
-        if (s == 8)
+        if ((fopen_s(&datei, "Einfach.csv", "r")) != NULL)
         {
-            z++;
-            s = 0;
+            fprintf_s(stderr, "Datei konnte nicht geoeffnet werden!\n");
         }
-        (feld[z][s])->setWertZelle(0);
+
+        while ((fscanf_s(datei, "%i\n", &tmp)) != EOF)
+        {
+            s++;
+            if (s == 8)
+            {
+                z++;
+                s = 0;
+            }
+            (feld[z][s])->setWertZelle(tmp);
+        }
+
+        fclose(datei);
     }
 
-    fclose(datei);
+    if (auswahl == 2)
+    {
+        FILE* datei;
+
+        if ((fopen_s(&datei, "Mittel.csv", "r")) != NULL)
+        {
+            fprintf_s(stderr, "Datei konnte nicht geoeffnet werden!\n");
+        }
+
+        while ((fscanf_s(datei, "%i\n", &tmp)) != EOF)
+        {
+            s++;
+            if (s == 8)
+            {
+                z++;
+                s = 0;
+            }
+            (feld[z][s])->setWertZelle(tmp);
+        }
+
+        fclose(datei);
+    }
+
+    if (auswahl == 3)
+    {
+        FILE* datei;
+
+        if ((fopen_s(&datei, "Schwer.csv", "r")) != NULL)
+        {
+            fprintf_s(stderr, "Datei konnte nicht geoeffnet werden!\n");
+        }
+
+        while ((fscanf_s(datei, "%i\n", &tmp)) != EOF)
+        {
+            s++;
+            if (s == 8)
+            {
+                z++;
+                s = 0;
+            }
+            (feld[z][s])->setWertZelle(tmp);
+        }
+
+        fclose(datei);
+    }
+
+}
+
+bool Spielfeld::eingabe()
+{
+    int wertZelle = 0;
+    do
+    {
+
+        cout << "Zeile: " << endl;
+        cin >> zeile;
+        cout << "Spalte: " << endl;
+        cin >> spalte;
+
+    } while (feld[zeile][spalte]->checkBelegt() == true);
+
+    cout << "Welche Zahl möchten sie eingeben: ";
+
+    cin >> wertZelle;
+
+    feld[zeile][spalte]->wertEinfuegen(zeile, spalte, wertZelle);
+
+    return false;
 }

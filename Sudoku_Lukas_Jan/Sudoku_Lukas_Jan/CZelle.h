@@ -1,4 +1,6 @@
 #pragma once
+#include "Spielfeld.h"
+
 class CZelle
 {
 private:
@@ -6,10 +8,10 @@ private:
 	bool belegt;
 	int positionSpalte;
 	int positionZeile;
-
+	Spielfeld* Sudoku;
 public:	
 	CZelle();
-	CZelle(int wertZelle, bool belegt);
+	CZelle(int wertZelle, bool belegt,Spielfeld* Sudoku);
 	~CZelle();
 	void setWertZelle(int wertZelle);
 	void setBelegt(bool belegt);
@@ -18,7 +20,7 @@ public:
 	int getWertZelle();
 	int getPositionSpalte();
 	int getPositionZeile();
-	void wertEinfuegen(CZelle feld[9][9]);
+	void wertEinfuegen(int zeile, int spalte, int wertZelle);
 	bool checkBelegt();
 
 };

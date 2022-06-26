@@ -1,5 +1,6 @@
 #include "CZelle.h"
 #include "Spielfeld.h"
+#include "CMenue.h"
 #include <iostream>
 
 using namespace std;
@@ -9,10 +10,11 @@ CZelle::CZelle()
 
 }
 
-CZelle::CZelle(int wertZelle, bool belegt)
+CZelle::CZelle(int wertZelle, bool belegt,Spielfeld* Sudoku)
 {
 	this->wertZelle = wertZelle;
 	this->belegt = belegt;
+	this->Sudoku = Sudoku;
 }
 
 CZelle::~CZelle()
@@ -54,30 +56,17 @@ int CZelle:: getPositionZeile()
 {
 	return positionZeile;
 }
-void CZelle::wertEinfuegen(CZelle feld[9][9])
+void CZelle::wertEinfuegen(int zeile, int spalte, int wertZelle)
 {
-	do
+	if (Sudoku->checkNeunMal(wertZelle) == true)
 	{
-
-		cout << "Zeile: " << endl;
-		cin >> positionZeile;	
-		cout << "Spalte: " << endl;
-		cin >> positionSpalte;
-
-	} while (checkBelegt() == true);
-
-	cout << "Welche Zahl möchten sie eingeben: ";
-	cin >> wertZelle;
-	Spielfeld Joke; 
-	if (Joke.checkNeunMal(feld, wertZelle) == true)
-	{
-		feld[positionZeile-1][positionSpalte-1].setWertZelle(wertZelle);	
-		Joke.ausgabeSpielfeld(feld);
+		setWertZelle(wertZelle);
+		Sudoku->ausgabeSpielfeld();
 	}
 	else
 	{
 		cout << "Ist schon 9 mal vorhanden" << endl;
-		wertEinfuegen(feld);
+		Sudoku->eingabe();
 	}
 }
 

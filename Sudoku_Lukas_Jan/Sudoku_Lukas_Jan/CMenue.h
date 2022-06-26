@@ -1,9 +1,12 @@
 #pragma once
+#include "Spielfeld.h"
+
 class CMenue
 {
 private:
 	int schwierigkeit;
 	int anzahlMoeglicheFelher;
+	Spielfeld Sudoku;
 public:
 	CMenue();
 	CMenue(int schwierigkeit, int anzahlMoeglicheFelder);
@@ -14,5 +17,6 @@ public:
 	void setAnzahlMoeglicheFehler(int anzahlMoeglicheFelher);
 	int neuesSpiel();
 	void schwierigkeitsAuswahl();
+	Spielfeld* getSpielfeld() { return &Sudoku; };
 };
 
