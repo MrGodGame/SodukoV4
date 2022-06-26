@@ -20,7 +20,7 @@ public:
 	void ausgabeSpielfeld();
 	void neustarten();
 	void auslesen(int auswahl);
-	bool eingabe();
+	void eingabe();
 
 };
 

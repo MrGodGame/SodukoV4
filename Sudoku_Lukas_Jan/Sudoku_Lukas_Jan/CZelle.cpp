@@ -58,16 +58,16 @@ int CZelle:: getPositionZeile()
 }
 void CZelle::wertEinfuegen(int zeile, int spalte, int wertZelle)
 {
-	if (Sudoku->checkNeunMal(wertZelle) == true)
-	{
+	//if (Sudoku->checkNeunMal(wertZelle) == true)
+	//{
 		setWertZelle(wertZelle);
 		Sudoku->ausgabeSpielfeld();
-	}
+	/*}
 	else
 	{
 		cout << "Ist schon 9 mal vorhanden" << endl;
 		Sudoku->eingabe();
-	}
+	}*/
 }
 
 bool CZelle::checkBelegt()
